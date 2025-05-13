@@ -3,31 +3,104 @@
 <title>MASO JUNIOR</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <meta http-equiv="refresh" content="10">
-<style>
-.green {color:green; font-size: 120%;}                   
-.red{color:red; font-size: 120%;}                   
-</style>
-</head><body>
-<h1>ČAS DO KONCE HRY: </h1>
-<div id='timer'></div>
-<script>
-function update_countdown() {
-  const now = new Date();
-  const target = new Date();
-  target.setHours(22, 0, 0, 0);
-  let minutes = 0;
-  let seconds = 0;
-  if (now < target) {
-    const diff = target - now;
-    const totalSeconds = Math.floor(diff / 1000);
-    minutes = Math.floor(totalSeconds / 60);
-    seconds = totalSeconds % 60;
+  <style>
+    body {
+      background-color: #f4f4f4;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+  .timer-div {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+    padding: 15px 20px;
+    border: 2px solid #888;
+    margin-bottom: 25px;
+    width: 100%;
+    box-sizing: border-box;
   }
-  const pad = num => String(num).padStart(2, '0');
-  document.getElementById("timer").textContent =
-    `${pad(minutes)}:${pad(seconds)}`;
-}
-update_countdown();
-setInterval(update_countdown, 1000);
-</script>
-<table class='table table-striped'><tr><th>Pečivo level 1</th><th>Pečivo level 2</th><th>Pečivo level 3</th></tr><tr><td> chleba - 35 b </td><td> loupacek - 85 b </td><td> pizza kapsa - 75 b </td></tr><tr><td> rohlik - 30 b </td><td> kobliha - 90 b </td><td> croissant - 90 b </td></tr><tr><td> kaiserka - 50 b </td><td> bageta - 85 b </td><td> donut - 110 b </td></tr><tr><td></td><td></td><td>kolac - 115 b </td></tr></table></body></html>
+
+  .timer-label {
+    margin-right: 10px;
+  }
+
+  .timer-time {
+    font-family: 'Courier New', monospace;
+    font-size: 32px;
+  }
+    table {
+      background-color: white;
+      font-size: 20px;
+    }
+
+    th {
+      text-align: center;
+      font-size: 22px;
+    }
+
+    td {
+      vertical-align: middle;
+      padding: 20px;
+    }
+
+    .green {
+      color: green;
+      font-size: 120%;
+      font-weight: bold;
+    }
+
+    .red {
+      color: red;
+      font-size: 120%;
+      font-weight: bold;
+    }
+
+    /* Barevné pozadí pro sloupce */
+    .level1 {
+      background-color: #d0f0d0; /* světle zelená */
+    }
+
+    .level2 {
+      background-color: #fff5cc; /* světle žlutá */
+    }
+
+    .level3 {
+      background-color: #ffd6cc; /* světle červená */
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-div">
+      <span class="timer-label">Čas do konce:</span>
+      <span id="timer" class="timer-time">--:--</span>
+  </div>
+  <script>
+    function update_countdown() {
+      const now = new Date();
+      const target = new Date();
+      target.setHours(TIME_HOURS, TIME_MINUTES, 0, 0); // Konec v 20:45
+      let minutes = 0;
+      let seconds = 0;
+      if (now < target) {
+        const diff = target - now;
+        const totalSeconds = Math.floor(diff / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        minutes = Math.floor((totalSeconds % 3600) / 60);
+        seconds = totalSeconds % 60;
+
+        const pad = num => String(num).padStart(2, '0');
+        document.getElementById("timer").textContent =
+          `${hours}:${pad(minutes)}:${pad(seconds)}`;
+      } else {
+        document.getElementById("timer").textContent = "00:00:00";
+      }
+    }
+
+    update_countdown();
+    setInterval(update_countdown, 1000);
+  </script>
+<table class='table table-bordered'><tr><th>Pečivo level 1</th><th>Pečivo level 2</th><th>Pečivo level 3</th></tr><tr><td> chleba - 35 b </td><td> loupacek - 85 b </td><td> pizza kapsa - 75 b </td></tr><tr><td> rohlik - 30 b </td><td> kobliha - 90 b </td><td> croissant - 90 b </td></tr><tr><td> kaiserka - 50 b </td><td> bageta - 85 b </td><td> donut - 110 b </td></tr><tr><td></td><td></td><td>kolac - 115 b </td></tr></table></body></html>
